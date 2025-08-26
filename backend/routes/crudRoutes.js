@@ -1,15 +1,16 @@
 const express = require("express");
 const { getAllData, createData, getSingleData, updateData, deleteData } = require("../controllers/crudController");
+const { validateToken } = require("../middleware/validateTokenHandler");
 
 const router = express.Router();
 
 router.route("/")
-  .get(getAllData)
-  .post(createData);
+  .get(validateToken, getAllData)
+  .post(validateToken, createData);
 
 router.route("/:id")
-  .get(getSingleData)
-  .put(updateData)
-  .delete(deleteData);
+  .get(validateToken, getSingleData)
+  .put(validateToken, updateData)
+  .delete(validateToken, deleteData);
 
 module.exports = router;
